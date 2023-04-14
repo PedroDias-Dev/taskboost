@@ -8,7 +8,7 @@ export async function seed(knex: Knex): Promise<void> {
 
   const users = await knex
     .count()
-    .from('User')
+    .from('users')
     .first();
 
   if (Number(users.count) !== 1) return;
@@ -27,6 +27,6 @@ export async function seed(knex: Knex): Promise<void> {
       updatedDate: new Date()
     };
 
-    await knex.insert(user).into('User');
+    await knex.insert(user).into('users');
   }
 }

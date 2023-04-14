@@ -30,7 +30,7 @@ export class User extends Model implements IUser {
   }
 
   public static get tableName(): string {
-    return 'User';
+    return 'users';
   }
 
   public static get relationMappings(): any {

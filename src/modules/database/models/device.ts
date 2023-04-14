@@ -23,7 +23,7 @@ export class Device extends Model implements IDevice {
   public user: User;
 
   public static get tableName(): string {
-    return 'Device';
+    return 'devices';
   }
 
   public static get relationMappings(): any {

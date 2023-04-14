@@ -1,7 +1,7 @@
 import * as Knex from 'knex';
 
 export async function up(knex: Knex): Promise<void> {
-  await knex.schema.createTable('Device', table => {
+  await knex.schema.createTable('devices', table => {
     table
       .string('id', 150)
       .notNullable()
@@ -12,7 +12,7 @@ export async function up(knex: Knex): Promise<void> {
       .nullable()
       .unsigned()
       .references('id')
-      .inTable('User')
+      .inTable('users')
       .onDelete('CASCADE');
 
     table.string('name', 150).notNullable();
@@ -24,5 +24,5 @@ export async function up(knex: Knex): Promise<void> {
 }
 
 export async function down(knex: Knex): Promise<void> {
-  await knex.schema.dropTable('Device');
+  await knex.schema.dropTable('devices');
 }

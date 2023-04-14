@@ -14,11 +14,11 @@ export async function seed(knex: Knex): Promise<void> {
 
   const users = await knex
     .count()
-    .from('User')
+    .from('users')
     .where({ email: adminUser.email })
     .first();
 
   if (Number(users.count) > 0) return;
 
-  await knex.insert(adminUser).into('User');
+  await knex.insert(adminUser).into('users');
 }
