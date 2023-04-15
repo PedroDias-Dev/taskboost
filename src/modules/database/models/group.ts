@@ -14,7 +14,7 @@ export class Group extends Model implements IGroup {
   public updatedDate: Date;
 
   public static get tableName(): string {
-    return 'Group';
+    return 'groups';
   }
 
   public static get virtualAttributes(): string[] {

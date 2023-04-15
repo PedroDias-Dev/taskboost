@@ -29,7 +29,7 @@ export class Goal extends Model implements IGoal {
   public group: Group;
 
   public static get tableName(): string {
-    return 'Goal';
+    return 'goals';
   }
 
   public static get virtualAttributes(): string[] {

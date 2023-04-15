@@ -3,15 +3,17 @@ import { CommonModule } from 'modules/common/module';
 import { DatabaseModule } from 'modules/database/module';
 
 import { AuthController } from './controllers/auth';
+import { GoalsController } from './controllers/goals';
 import { ProfileController } from './controllers/profile';
 import { DeviceRepository } from './repositories/device';
+import { GoalRepository } from './repositories/goal';
 import { UserRepository } from './repositories/user';
 import { AuthService } from './services/auth';
 import { UserService } from './services/user';
 
 @Module({
   imports: [HttpModule, CommonModule, DatabaseModule],
-  controllers: [AuthController, ProfileController],
-  providers: [AuthService, UserService, UserRepository, DeviceRepository]
+  controllers: [AuthController, ProfileController, GoalsController],
+  providers: [AuthService, UserService, UserRepository, DeviceRepository, GoalRepository]
 })
 export class AppModule {}

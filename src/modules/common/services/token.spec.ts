@@ -91,7 +91,8 @@ describe('Admin/TokenService', () => {
       firstName: 'Daniel',
       lastName: 'Prado',
       email: 'danielprado.ad@gmail.com',
-      roles: [enRoles.sysAdmin]
+      roles: [enRoles.sysAdmin],
+      groupId: 1
     });
     expect(token).toBeString();
 

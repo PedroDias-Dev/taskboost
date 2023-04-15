@@ -22,7 +22,8 @@ export class TokenService {
       email: user.email,
       firstName: user.firstName,
       lastName: user.lastName,
-      roles: user.roles
+      roles: user.roles,
+      groupId: user.groupId
     };
 
     return this.sign(tokenData, enTokenType.accessToken, timeout || (forApp ? AUTH.appTimeout : AUTH.timeout));

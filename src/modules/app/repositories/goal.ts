@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { Goal } from 'modules/database/models/goal';
 import { Transaction } from 'objection';
 
+import { CreateByGroupValidator } from '../validators/goal/createByGroup';
+
 @Injectable()
 export class GoalRepository {
   public async findAllPublic(transaction?: Transaction): Promise<Goal[]> {
@@ -16,7 +18,7 @@ export class GoalRepository {
     return Goal.query(transaction).findById(id);
   }
 
-  public async create(model: Goal, transaction?: Transaction): Promise<Goal> {
+  public async create(model: CreateByGroupValidator, transaction?: Transaction): Promise<Goal> {
     return Goal.query(transaction).insertAndFetch(model);
   }
 
