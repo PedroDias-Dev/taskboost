@@ -7,7 +7,7 @@ import uuid from 'uuid';
 import { IUploadProvider } from '.';
 
 export class LocalProvider implements IUploadProvider {
-  private readonly DIR = 'upload';
+  private readonly DIR = 'uploads';
 
   public async save(filename: string, base64: string): Promise<string> {
     const baseFolder = format(new Date(), 'yyyy/MM/dd');
@@ -18,7 +18,12 @@ export class LocalProvider implements IUploadProvider {
 
     const path = await this.getPath(filename);
     await fs.promises.writeFile(path, base64, <any>'base64');
-    return filename;
+    return this.getURL(path);
+  }
+
+  public async getURL(path: string): Promise<string> {
+    const url = 'http://localhost:3333';
+    return `${url}/${path}`;
   }
 
   public async getPath(filename: string): Promise<string> {

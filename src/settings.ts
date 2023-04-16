@@ -69,7 +69,7 @@ export const UPLOAD = {
       region: process.env.AWS_REGION
     },
     bucket: process.env.AWS_S3_BUCKET,
-    publicUrl: process.env.AWS_S3_URL
+    publicUrl: `https://${process.env.AWS_S3_BUCKET}.s3.amazonaws.com`
   }
 };
 

@@ -44,7 +44,7 @@ export class S3Provider implements IUploadProvider {
 
     await upload.promise();
 
-    return filename;
+    return this.getPath(filename);
   }
 
   public async getPath(filename: string): Promise<string> {
