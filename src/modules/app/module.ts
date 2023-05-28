@@ -13,6 +13,7 @@ import { GoalRepository } from './repositories/goal';
 import { GroupRepository } from './repositories/group';
 import { UserRepository } from './repositories/user';
 import { AuthService } from './services/auth';
+import { GroupInviteService } from './services/group-invite';
 import { UserService } from './services/user';
 
 @Module({
@@ -25,7 +26,8 @@ import { UserService } from './services/user';
     DeviceRepository,
     GoalRepository,
     FileRepository,
-    GroupRepository
+    GroupRepository,
+    GroupInviteService
   ]
 })
 export class AppModule {}

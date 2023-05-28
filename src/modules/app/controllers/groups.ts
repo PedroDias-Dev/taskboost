@@ -6,6 +6,7 @@ import { Group } from 'modules/database/models/group';
 
 import { GroupRepository } from '../repositories/group';
 import { CreateGroupValidator } from '../validators/group/create';
+import { InviteValidator } from '../validators/group/invite';
 
 @ApiTags('App: Groups')
 @Controller('/groups')
@@ -15,13 +16,25 @@ export class GroupsController {
 
   @Get('/get-group')
   @ApiResponse({ status: 200, type: Group })
-  public async getGoalDetails(@CurrentUser() currentUser: ICurrentUser) {
-    return this.groupRepository.getGoalDetails(currentUser.groupId);
+  public async getGroupDetails(@CurrentUser() currentUser: ICurrentUser) {
+    return this.groupRepository.getGroupDetails(currentUser.groupId);
   }
 
   @Post('/create')
   @ApiResponse({ status: 200, type: Group })
-  public async createByGroup(@Body() model: CreateGroupValidator) {
+  public async createGroup(@Body() model: CreateGroupValidator) {
     return this.groupRepository.create(model);
+  }
+
+  @Get('/get-group-invite')
+  @ApiResponse({ status: 200, type: String })
+  public async getGroupInvite(@CurrentUser() currentUser: ICurrentUser) {
+    return this.groupRepository.getGroupInvite(currentUser.groupId);
+  }
+
+  @Post('/confirm-group-invite')
+  @ApiResponse({ status: 200, type: String })
+  public async confirmGroupInvite(@Body() model: InviteValidator, @CurrentUser() currentUser: ICurrentUser) {
+    return this.groupRepository.confirmInvite(currentUser.groupId, currentUser.id, model.invite);
   }
 }
