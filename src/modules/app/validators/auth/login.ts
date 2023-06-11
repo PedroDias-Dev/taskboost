@@ -10,15 +10,15 @@ export class LoginValidator {
   @ApiProperty({ required: true })
   public password: string;
 
-  @IsNotEmpty()
-  @ApiProperty({ required: true })
-  public deviceId: string;
+  // @IsNotEmpty()
+  // @ApiProperty({ required: true })
+  // public deviceId: string;
 
-  @IsNotEmpty()
-  @ApiProperty({ required: true })
-  public deviceName: string;
+  // @IsNotEmpty()
+  // @ApiProperty({ required: true })
+  // public deviceName: string;
 
-  @IsNotEmpty()
-  @ApiProperty({ required: true })
-  public notificationToken: string;
+  // @IsNotEmpty()
+  // @ApiProperty({ required: true })
+  // public notificationToken: string;
 }

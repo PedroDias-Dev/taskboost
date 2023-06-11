@@ -7,11 +7,33 @@ import { CreateByGroupValidator } from '../validators/goal/createByGroup';
 @Injectable()
 export class GoalRepository {
   public async findAllPublic(transaction?: Transaction): Promise<Goal[]> {
-    return Goal.query(transaction).where({ isPublic: true });
+    return Goal.query(transaction)
+      .join('users', 'users.id', 'goals.userId')
+      .select(
+        'goals.title',
+        'goals.description',
+        'users.firstName',
+        'users.lastName',
+        'goals.createdDate',
+        'goals.status'
+      )
+      .where({ isPublic: true })
+      .limit(10)
+      .orderBy('createdDate');
   }
 
   public async findAllByGroup(id: number, transaction?: Transaction): Promise<Goal[]> {
-    return Goal.query(transaction).where({ groupId: id });
+    return Goal.query(transaction)
+      .join('users', 'users.id', 'goals.userId')
+      .select(
+        'goals.title',
+        'goals.description',
+        'users.firstName',
+        'users.lastName',
+        'goals.createdDate',
+        'goals.status'
+      )
+      .where({ 'goals.groupId': id });
   }
 
   public async getGoalDetails(id: number, transaction?: Transaction): Promise<Goal> {

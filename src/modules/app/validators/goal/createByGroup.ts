@@ -19,7 +19,7 @@ export class CreateByGroupValidator implements IGoal {
   @IsNotEmpty()
   @IsString()
   @MinLength(3)
-  @MaxLength(50)
+  @MaxLength(650)
   @ApiProperty({ required: true, type: 'string', minLength: 3, maxLength: 500 })
   public description: string;
 

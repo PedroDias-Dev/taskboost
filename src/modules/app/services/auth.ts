@@ -2,9 +2,6 @@ import { BadRequestException, ForbiddenException, Injectable, NotFoundException 
 import { ICurrentUser } from 'modules/common/interfaces/currentUser';
 import { PasswordService } from 'modules/common/services/password';
 import { enTokenType, TokenService } from 'modules/common/services/token';
-import { IDevice } from 'modules/database/interfaces/device';
-import { Device } from 'modules/database/models/device';
-import uuid from 'uuid/v4';
 
 import { DeviceRepository } from '../repositories/device';
 import { UserRepository } from '../repositories/user';
@@ -19,29 +16,24 @@ export class AuthService {
     private passwordService: PasswordService
   ) {}
 
-  public async login(model: LoginValidator): Promise<{ accessToken: String; refreshToken: string }> {
+  public async login(model: LoginValidator): Promise<{ accessToken: String }> {
     const user = await this.userRepository.findByEmail(model.email);
-    if (!user) throw new NotFoundException();
+    if (!user) throw new NotFoundException('Usuário não encontrado');
 
     const isValid = await this.passwordService.compare(user.password, model.password);
-    if (!isValid) throw new BadRequestException();
+    if (!isValid) throw new BadRequestException('Senha incorreta, tente novamente.');
 
-    const token = uuid();
+    const accessToken = await this.tokenService.generateAccessToken(user, true);
 
-    const [accessToken, refreshToken] = await Promise.all([
-      this.tokenService.generateAccessToken(user, true),
-      this.tokenService.generateRefreshToken(user.id, model.deviceId, token)
-    ]);
+    // await this.saveDevice({
+    //   id: model.deviceId,
+    //   name: model.deviceName,
+    //   notificationToken: model.notificationToken,
+    //   currentToken: token,
+    //   userId: user.id
+    // });
 
-    await this.saveDevice({
-      id: model.deviceId,
-      name: model.deviceName,
-      notificationToken: model.notificationToken,
-      currentToken: token,
-      userId: user.id
-    });
-
-    return { accessToken, refreshToken };
+    return { accessToken };
   }
 
   public async logout(currentUser: ICurrentUser, deviceId: string) {
@@ -86,13 +78,13 @@ export class AuthService {
     this.deviceRepository.update({ ...device, notificationToken });
   }
 
-  private async saveDevice(model: IDevice): Promise<Device> {
-    const device = await this.deviceRepository.findById(model.id);
+  // private async saveDevice(model: IDevice): Promise<Device> {
+  //   const device = await this.deviceRepository.findById(model.id);
 
-    if (device) {
-      return this.deviceRepository.update({ ...device, ...model });
-    }
+  //   if (device) {
+  //     return this.deviceRepository.update({ ...device, ...model });
+  //   }
 
-    return this.deviceRepository.insert(model);
-  }
+  //   return this.deviceRepository.insert(model);
+  // }
 }

@@ -16,9 +16,13 @@ export class GoalsController {
   @Get('/get-by-group')
   @ApiResponse({ status: 200, type: Goal })
   public async findAllByGroup(@CurrentUser() currentUser: ICurrentUser) {
-    console.log(currentUser);
-
     return this.goalRepository.findAllByGroup(currentUser.groupId);
+  }
+
+  @Get('/get-public')
+  @ApiResponse({ status: 200, type: Goal })
+  public async findAllPublic() {
+    return this.goalRepository.findAllPublic();
   }
 
   @Post('/create-by-group')

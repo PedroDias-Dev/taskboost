@@ -13,8 +13,8 @@ exports.up = async function(knex) {
       .onDelete('CASCADE');
     table
       .integer('groupId')
-      .nullable()
       .unsigned()
+      .nullable()
       .references('id')
       .inTable('groups')
       .onDelete('CASCADE');

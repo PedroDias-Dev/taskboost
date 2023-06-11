@@ -16,7 +16,7 @@ export class Goal extends Model implements IGoal {
   public fileUrl: string;
   @ApiProperty({ type: 'integer' })
   public userId?: number;
-  @ApiProperty({ type: 'integer' })
+  @ApiProperty({ type: 'integer', required: false })
   public groupId?: number;
   @ApiProperty({ type: 'boolean' })
   public isPublic?: boolean;
