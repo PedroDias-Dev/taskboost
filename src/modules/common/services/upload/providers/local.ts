@@ -23,7 +23,7 @@ export class LocalProvider implements IUploadProvider {
   }
 
   public async getURL(path: string): Promise<string> {
-    const url = `http://${HOST}:3333`;
+    const url = `http://${HOST}`;
     return `${url}/${path}`;
   }
 
