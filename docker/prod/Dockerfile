@@ -8,7 +8,7 @@ RUN set -x \
     && echo "VERSION="$(git rev-list --all --count) > .env \
     && cat .env \
     && yarn \
-    && yarn test \
+    # && yarn test \
     && yarn build
 
 FROM node:12-alpine

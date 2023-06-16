@@ -9,7 +9,7 @@
     "seed": "git@bitbucket.org:kinja/taskboost-api-api.git"
   },
   "scripts": {
-    "start": "yarn ts-node-dev --inspect=0.0.0.0:9229 --respawn --no-notify --transpileOnly --no-deps --project tsconfig.dev.json ./src/index.ts",
+    "start": "node --no-notify --transpileOnly --no-deps --project tsconfig.dev.json ./src/index.ts",
     "dev": "yarn ts-node-dev --inspect=0.0.0.0:9229 --respawn --no-notify --transpileOnly --no-deps --project tsconfig.dev.json ./src/index.ts",
     "db": "node ./scripts/reset-base.ts && yarn dev",
     "db:create": "node ./scripts/create-db.ts",
@@ -27,11 +27,11 @@
     "seed:make": "yarn knex seed:make -x ts",
     "postseed:make": "yarn eslint \"./src/modules/database/migrations/**/*.ts\" --fix",
     "docker:release": "yarn docker:build && yarn docker:push",
-    "docker:build": "docker build -t kinja/kinja-base-api -f docker/prod/Dockerfile .",
-    "docker:push": "docker push kinja/kinja-base-api",
+    "docker:build": "docker build -t pedrodiasdv/taskboost -f docker/prod/Dockerfile .",
+    "docker:push": "docker push pedrodiasdv/taskboost",
     "docker:release:staging": "yarn docker:build:staging && yarn docker:push:staging",
-    "docker:build:staging": "docker build -t kinja/kinja-base-api:staging -f docker/prod/Dockerfile .",
-    "docker:push:staging": "docker push kinja/kinja-base-api:staging",
+    "docker:build:staging": "docker build -t pedrodiasdv/taskboost:staging -f docker/prod/Dockerfile .",
+    "docker:push:staging": "docker push pedrodiasdv/taskboost:staging",
     "deploy-server": "scripts/deploy-server.sh"
   },
   "husky": {
