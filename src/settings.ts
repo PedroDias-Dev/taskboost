@@ -1,5 +1,4 @@
 import dotenv from 'dotenv';
-import { MailProvider } from 'modules/common/services/mail/providers';
 import { UploadProvider } from 'modules/common/services/upload/providers';
 
 const ENV_FILE = dotenv.config().parsed || {};
@@ -42,20 +41,6 @@ if (NODE_ENV !== 'test' && !['aws', 'mailgun', 'file'].includes(process.env.MAIL
   throw new Error(`INVALID MAIL_PROVIDER: ${process.env.MAIL_PROVIDER}`);
 }
 
-export const MAIL = {
-  provider: process.env.MAIL_PROVIDER as MailProvider,
-  from: process.env.MAIL_FROM,
-  mailgun: {
-    apiKey: process.env.MAIL_MAILGUN_APIKEY,
-    domain: process.env.MAIL_MAILGUN_DOMAIN
-  },
-  aws: {
-    accessKeyId: process.env.AWS_ACCESSKEY,
-    secretAccessKey: process.env.AWS_SECRET,
-    region: process.env.AWS_REGION
-  }
-};
-
 if (NODE_ENV !== 'test' && !['local', 's3'].includes(process.env.UPLOAD_PROVIDER)) {
   throw new Error(`INVALID UPLOAD_PROVIDER: ${process.env.UPLOAD_PROVIDER}`);
 }
@@ -69,14 +54,13 @@ export const UPLOAD = {
       region: process.env.AWS_REGION
     },
     bucket: process.env.AWS_S3_BUCKET,
-    publicUrl: process.env.AWS_S3_URL
+    publicUrl: `https://${process.env.AWS_S3_BUCKET}.s3.amazonaws.com`
   }
 };
 
 if (NODE_ENV !== 'test') {
   console.table({
     NODE_ENV,
-    MAIL_PROVIDER: MAIL.provider,
     UPLOAD_PROVIDER: UPLOAD.provider,
     SENTRY_ENABLED: !!SENTRY_DSN,
     API_DNS,

@@ -2,11 +2,13 @@ import './global';
 
 import { ValidationPipe } from '@nestjs/common';
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as sentry from '@sentry/node';
 import { ExceptionFilter } from 'filters/exception';
 import { ApplicationModule } from 'modules/';
 import morgan from 'morgan';
+import { join } from 'path';
 import { IS_DEV, IS_PROD, NODE_ENV, SENTRY_DSN, VERSION } from 'settings';
 
 sentry.init({
@@ -16,7 +18,7 @@ sentry.init({
 });
 
 async function bootstrap(): Promise<void> {
-  const app = await NestFactory.create(ApplicationModule);
+  const app = await NestFactory.create<NestExpressApplication>(ApplicationModule);
   const { httpAdapter } = app.get(HttpAdapterHost);
 
   if (IS_DEV) {
@@ -36,6 +38,8 @@ async function bootstrap(): Promise<void> {
 
   const document = SwaggerModule.createDocument(app, swaggerOptions);
   SwaggerModule.setup('/swagger', app, document);
+
+  app.useStaticAssets(join(__dirname, '../uploads'), { prefix: '/uploads' });
 
   await app.listen(process.env.PORT || 3333, '0.0.0.0', () => {
     console.log(`SERVER STARTED as ${NODE_ENV} | PORT: ${process.env.PORT || 3333}`);

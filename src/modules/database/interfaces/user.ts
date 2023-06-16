@@ -5,6 +5,7 @@ export interface IUser {
   email: string;
   password?: string;
   roles?: enRoles[];
+  groupId?: number;
 
   createdDate?: Date;
   updatedDate?: Date;

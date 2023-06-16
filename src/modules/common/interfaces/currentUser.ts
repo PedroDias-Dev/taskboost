@@ -4,4 +4,5 @@ export interface ICurrentUser {
   firstName: string;
   lastName?: string;
   roles: string[];
+  groupId: number;
 }
