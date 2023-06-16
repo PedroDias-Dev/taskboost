@@ -9,6 +9,7 @@
     "seed": "git@bitbucket.org:kinja/taskboost-api-api.git"
   },
   "scripts": {
+    "start": "yarn ts-node-dev --inspect=0.0.0.0:9229 --respawn --no-notify --transpileOnly --no-deps --project tsconfig.dev.json ./src/index.ts",
     "dev": "yarn ts-node-dev --inspect=0.0.0.0:9229 --respawn --no-notify --transpileOnly --no-deps --project tsconfig.dev.json ./src/index.ts",
     "db": "node ./scripts/reset-base.ts && yarn dev",
     "db:create": "node ./scripts/create-db.ts",
