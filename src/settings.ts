@@ -27,7 +27,7 @@ export const BCRYPT_SALT_FACTOR = NODE_ENV === 'test' ? 4 : 11;
 
 export const ASSETS_FOLDER = `${__dirname}/assets`;
 
-export const HOST = process.env.HOST || 'localhost';
+export const HOST = process.env.HOST || `localhost:${process.env.PORT || 3333}`;
 
 export const AUTH = {
   timeout: 480, // 8 hours
