@@ -2,6 +2,7 @@
 import { BadRequestException } from '@nestjs/common';
 import format from 'date-fns/format';
 import fs from 'fs';
+import { HOST } from 'settings';
 import uuid from 'uuid';
 
 import { IUploadProvider } from '.';
@@ -22,7 +23,7 @@ export class LocalProvider implements IUploadProvider {
   }
 
   public async getURL(path: string): Promise<string> {
-    const url = 'http://localhost:3333';
+    const url = `http://${HOST}:3333`;
     return `${url}/${path}`;
   }
 
