@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { UserRepository } from 'modules/admin/repositories/user';
 import { Group } from 'modules/database/models/group';
 import { Transaction } from 'objection';
 
 import { GroupInviteService } from '../services/group-invite';
 import { CreateGroupValidator } from '../validators/group/create';
+import { UserRepository } from './user';
 
 @Injectable()
 export class GroupRepository {

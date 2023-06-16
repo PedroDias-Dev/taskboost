@@ -48,8 +48,6 @@ export class ExceptionFilter extends BaseExceptionFilter {
       });
     }
 
-    console.log(exception.message);
-
     const custom = new HttpException(
       {
         ...exception.message,

@@ -1,7 +1,7 @@
-import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { ICurrentUser } from 'modules/common/interfaces/currentUser';
 import { PasswordService } from 'modules/common/services/password';
-import { enTokenType, TokenService } from 'modules/common/services/token';
+import { TokenService } from 'modules/common/services/token';
 
 import { DeviceRepository } from '../repositories/device';
 import { UserRepository } from '../repositories/user';
@@ -25,14 +25,6 @@ export class AuthService {
 
     const accessToken = await this.tokenService.generateAccessToken(user, true);
 
-    // await this.saveDevice({
-    //   id: model.deviceId,
-    //   name: model.deviceName,
-    //   notificationToken: model.notificationToken,
-    //   currentToken: token,
-    //   userId: user.id
-    // });
-
     return { accessToken };
   }
 
@@ -44,47 +36,4 @@ export class AuthService {
 
     await this.deviceRepository.remove(deviceId);
   }
-
-  public async refreshToken(refreshToken: string, deviceId: string) {
-    const tokenData = await this.tokenService.verify(refreshToken, enTokenType.refreshToken);
-    if (tokenData.deviceId !== deviceId) throw new BadRequestException('invalid-device');
-
-    const device = await this.deviceRepository.findById(tokenData.deviceId);
-
-    if (!device) throw new NotFoundException('device-not-found');
-    if (tokenData.uuid !== device.currentToken) throw new BadRequestException('invalid-device');
-
-    const user = await this.userRepository.findById(tokenData.userId);
-    if (!user) throw new NotFoundException('user-not-found');
-
-    return this.tokenService.generateAccessToken(user, true);
-  }
-
-  public async updateSession(userId: number, deviceId: string, notificationToken: string) {
-    const device = await this.deviceRepository.findById(deviceId);
-
-    if (!device) {
-      throw new ForbiddenException('invalid-session');
-    }
-
-    if (userId && device.userId !== userId) {
-      throw new ForbiddenException('invalid-session');
-    }
-
-    if (!userId && device) {
-      return this.deviceRepository.remove(deviceId);
-    }
-
-    this.deviceRepository.update({ ...device, notificationToken });
-  }
-
-  // private async saveDevice(model: IDevice): Promise<Device> {
-  //   const device = await this.deviceRepository.findById(model.id);
-
-  //   if (device) {
-  //     return this.deviceRepository.update({ ...device, ...model });
-  //   }
-
-  //   return this.deviceRepository.insert(model);
-  // }
 }
