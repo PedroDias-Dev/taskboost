@@ -13,6 +13,8 @@ export class User extends Model implements IUser {
   public lastName: string;
   @ApiProperty({ type: 'string' })
   public email: string;
+  @ApiProperty({ type: 'integer' })
+  public groupId: number;
   public password: string;
   @ApiProperty({ type: 'string', isArray: true })
   public roles: enRoles[];

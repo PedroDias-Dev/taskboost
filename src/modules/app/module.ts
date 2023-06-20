@@ -7,6 +7,7 @@ import { FileController } from './controllers/file';
 import { GoalsController } from './controllers/goals';
 import { GroupsController } from './controllers/groups';
 import { ProfileController } from './controllers/profile';
+import { UserController } from './controllers/user';
 import { DeviceRepository } from './repositories/device';
 import { FileRepository } from './repositories/file';
 import { GoalRepository } from './repositories/goal';
@@ -18,7 +19,7 @@ import { UserService } from './services/user';
 
 @Module({
   imports: [HttpModule, CommonModule, DatabaseModule],
-  controllers: [AuthController, ProfileController, GoalsController, FileController, GroupsController],
+  controllers: [AuthController, UserController, ProfileController, GoalsController, FileController, GroupsController],
   providers: [
     AuthService,
     UserService,

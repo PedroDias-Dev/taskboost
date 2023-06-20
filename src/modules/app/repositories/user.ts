@@ -7,9 +7,8 @@ import { Transaction } from 'objection';
 export class UserRepository {
   public async findById(id: number, transaction?: Transaction): Promise<User> {
     return User.query(transaction)
-      .select('users.*', 'groups.name')
-      .findById(id)
-      .join('groups', 'users.groupId', 'groups.id');
+      .select('users.*')
+      .findById(id);
   }
 
   public async findByEmail(email: string, transaction?: Transaction): Promise<User> {
@@ -28,6 +27,13 @@ export class UserRepository {
 
     const result: any = await query;
     return Number(result.count) === 0;
+  }
+
+  public async create(model: IUser, transaction?: Transaction): Promise<User> {
+    return User.query(transaction).insertAndFetch({
+      ...model,
+      roles: ['user']
+    } as any);
   }
 
   public async update(model: IUser, transaction?: Transaction): Promise<User> {

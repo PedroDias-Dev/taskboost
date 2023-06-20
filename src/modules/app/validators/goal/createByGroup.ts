@@ -26,11 +26,11 @@ export class CreateByGroupValidator implements IGoal {
   @IsOptional()
   @IsString()
   @MinLength(3)
-  @MaxLength(50)
+  @MaxLength(250)
   @ApiProperty({ required: false, type: 'string', minLength: 3, maxLength: 500 })
   public fileUrl: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsInt()
   @Min(0)
   @ApiProperty({ required: true, type: 'integer' })

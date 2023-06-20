@@ -31,7 +31,7 @@ async function bootstrap(): Promise<void> {
 
   const swaggerOptions = new DocumentBuilder()
     .setTitle('taskboost')
-    .setDescription('Kinja API')
+    .setDescription('Taskboost API - IFSP 2023')
     .setVersion(`1.${VERSION}`)
     .addBearerAuth()
     .build();

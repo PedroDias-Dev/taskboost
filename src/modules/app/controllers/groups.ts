@@ -17,24 +17,24 @@ export class GroupsController {
   @Get('/get-group')
   @ApiResponse({ status: 200, type: Group })
   public async getGroupDetails(@CurrentUser() currentUser: ICurrentUser) {
-    return this.groupRepository.getGroupDetails(currentUser.groupId);
+    return this.groupRepository.getGroupDetails(currentUser.id);
   }
 
   @Post('/create')
   @ApiResponse({ status: 200, type: Group })
-  public async createGroup(@Body() model: CreateGroupValidator) {
-    return this.groupRepository.create(model);
+  public async createGroup(@Body() model: CreateGroupValidator, @CurrentUser() currentUser: ICurrentUser) {
+    return this.groupRepository.create(model, currentUser);
   }
 
   @Get('/get-group-invite')
   @ApiResponse({ status: 200, type: String })
   public async getGroupInvite(@CurrentUser() currentUser: ICurrentUser) {
-    return this.groupRepository.getGroupInvite(currentUser.groupId);
+    return this.groupRepository.getGroupInvite(currentUser.id);
   }
 
   @Post('/confirm-group-invite')
   @ApiResponse({ status: 200, type: String })
   public async confirmGroupInvite(@Body() model: InviteValidator, @CurrentUser() currentUser: ICurrentUser) {
-    return this.groupRepository.confirmInvite(currentUser.groupId, currentUser.id, model.invite);
+    return this.groupRepository.confirmInvite(currentUser.id, model.invite);
   }
 }

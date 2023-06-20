@@ -1,14 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, IsNotEmpty, IsOptional, IsString, MaxLength, Min, MinLength } from 'class-validator';
+import { IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator';
 import { IGroup } from 'modules/database/interfaces/group';
 
 export class CreateGroupValidator implements IGroup {
-  @IsOptional()
-  @IsInt()
-  @Min(0)
-  @ApiProperty({ required: false, type: 'integer' })
-  public id?: number;
-
   @IsNotEmpty()
   @IsString()
   @MinLength(3)
